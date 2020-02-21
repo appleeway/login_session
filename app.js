@@ -22,10 +22,10 @@ app.use(session({
 
 // set router
 app.get('/', (req, res) => {
-  if (!req.session.check) {
+  if (!req.session.name) {
     res.render('index')
   } else {
-    res.render('welcome', { sentence: 'We recognise you' })
+    res.render('welcome', { sentence: 'We recognise you! ', result: req.session.name })
   }
 })
 
@@ -33,7 +33,7 @@ app.post('/', (req, res) => {
   const email = req.body.email
   const password = req.body.password
   const result = validation(email, password)
-  req.session.check = result
+  req.session.name = result
   result ? res.render('welcome', { result }) : res.render('index', { alert: true })
 })
 
